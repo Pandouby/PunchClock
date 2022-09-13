@@ -1,4 +1,4 @@
-package com.example.punchclock.service;
+package com.example.punchclock.service.entry;
 
 import com.example.punchclock.model.Entry;
 import org.springframework.data.repository.CrudRepository;

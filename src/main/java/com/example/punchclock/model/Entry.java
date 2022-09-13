@@ -16,6 +16,10 @@ public class Entry {
     @Column(nullable = true)
     private LocalDateTime checkOut;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public Long getId() {
         return id;
     }

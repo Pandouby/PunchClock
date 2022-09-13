@@ -1,7 +1,7 @@
 package com.example.punchclock.controller;
 
 import com.example.punchclock.model.Entry;
-import com.example.punchclock.service.EntryService;
+import com.example.punchclock.service.entry.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,9 @@ public class EntryController {
     }
 
     @PostMapping("/entries")
-    public ResponseEntity create(@RequestBody Entry entry) {
+    public ResponseEntity create(@RequestBody Entry entry, @RequestHeader ("Authorization") String token) {
         if(entry.getCheckIn().isBefore(entry.getCheckOut())) {
-            entryService.createEntry(entry);
+            entryService.createEntry(entry, token);
             return new ResponseEntity(entry, HttpStatus.OK);
         } else {
             return new ResponseEntity("CheckOut time has to be bevor checkIn time", HttpStatus.BAD_REQUEST);

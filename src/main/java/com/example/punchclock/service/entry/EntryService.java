@@ -1,12 +1,14 @@
-package com.example.punchclock.service;
+package com.example.punchclock.service.entry;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.punchclock.model.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EntryService {
@@ -22,7 +24,7 @@ public class EntryService {
         return (List<Entry>) entityRepository.findAll();
     }
 
-    public Entry createEntry(Entry entry){
+    public Entry createEntry(Entry entry, String token) {
         entityRepository.save(entry);
         return entry;
     }
@@ -38,4 +40,13 @@ public class EntryService {
     public void delete(long id) {
         entityRepository.deleteById(id);
     }
-}
+
+    public void isTokenValid(String token) {
+        try {
+            JWT.require(Algorithm.HMAC256("123@abc")).build().verify(token);
+        } catch (JWTVerificationException e){
+
+        }
+
+    }
+ }
